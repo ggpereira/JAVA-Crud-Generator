@@ -1,0 +1,65 @@
+import java.sql.Connection; 
+import java.sql.SQLException; 
+import java.sql.DatabaseMetaData;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException; 
+import java.util.ArrayList;
+
+public class Metadados 
+{
+	public Connection open()
+	{
+		Connection c = null;
+		
+		try
+		{
+			Class.forName(DB.JDBC_DRIVER); 
+		}
+		catch(ClassNotFoundException e)
+		{
+			System.out.println("Não encontrou o driver chamado " + DB.JDBC_DRIVER + "na memória");
+		}
+		
+		try {
+			c = DriverManager.getConnection(DB.URL_CONEXAO, DB.USUARIO, DB.SENHA);
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		
+		return c; 
+	}
+	
+	public DatabaseMetaData getMetaData()
+	{
+		Connection connection = open();
+		DatabaseMetaData metadata = null; 
+		
+		try
+		{
+			metadata = connection.getMetaData();
+		}
+		catch(SQLException e)
+		{
+			System.out.println("Não foi possível ler os metadados: " + e.getMessage());
+		}
+		
+		
+		return metadata;
+	}
+	
+	public void printGeneralMetadata()throws SQLException
+	{
+		DatabaseMetaData m = getMetaData();
+		
+		System.out.println("Database Name: " + m.getDatabaseProductName());
+		System.out.println("Database version: " + m.getDatabaseProductVersion());
+		System.out.println("Logged User: " + m.getUserName());
+		System.out.println("JDDBC Driver: " + m.getDriverName());
+		System.out.println("Driver Version: " + m.getDriverVersion());
+		System.out.println("\n");
+	}
+	
+}

@@ -1,0 +1,35 @@
+import java.sql.Connection; 
+import java.sql.SQLException; 
+import java.sql.DatabaseMetaData;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException; 
+import java.util.ArrayList;
+
+public class Metadados 
+{
+	public Connection open()
+	{
+		Connection c = null;
+		DatabaseMetaData metadata = null;
+		
+		try
+		{
+			Class.forName(DB.JDBC_DRIVER); 
+		}
+		catch(ClassNotFoundException e)
+		{
+			System.out.println("Não encontrou o driver chamado " + DB.JDBC_DRIVER + "na memória");
+		}
+		
+		try {
+			c = DriverManager.getConnection(DB.URL_CONEXAO, DB.USUARIO, DB.SENHA);
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		
+		return c; 
+	}
+}
