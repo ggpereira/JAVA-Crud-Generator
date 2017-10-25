@@ -50,7 +50,7 @@ public class Metadados
 		return metadata;
 	}
 	
-	public void printGeneralMetadata()
+	public void printGeneralMetadata()	//Imprime informações sobre o BD utilizado
 	{
 		try
 		{
@@ -68,9 +68,9 @@ public class Metadados
 		}
 	}
 	
-	public Collection<String>getTables() 
+	public Collection<Tabela>getTables() 	/*Retorna uma lista de tabelas do BD*/
 	{
-		Collection<String> tables = new ArrayList<String>();
+		Collection<Tabela> tables = new ArrayList<Tabela>();
 		DatabaseMetaData m = getMetaData();
 
 		try 
@@ -81,7 +81,9 @@ public class Metadados
 		
 			while(rs.next())
 			{
-				tables.add(rs.getString("TABLE_NAME"));
+				Tabela t = new Tabela();
+				t.setTableName(rs.getString("TABLE_NAME"));
+				tables.add(t);
 			}
 		}
 		catch(SQLException e)
@@ -93,20 +95,27 @@ public class Metadados
 	}
 	
 	
-	public void getColumnsMetadata(Collection<String> tables) 
+	public void getColumnsMetadata(Collection<Tabela> tables) /*Navega pelas tabelas acessando suas colunas*/
 	{
 		ResultSet rs = null; 
 		DatabaseMetaData m = getMetaData();
+		
 		try {
-			for(String current_t : tables)
+			for(Tabela current_t : tables)
 			{
-				rs = m.getColumns(null, null, current_t, null);
-				System.out.println(current_t.toUpperCase());
+				rs = m.getColumns(null, null, current_t.getTableName(), null);
+				System.out.println(current_t.getTableName().toUpperCase());
 				while(rs.next())
 				{
-					System.out.println(rs.getString("COLUMN_NAME") + " " + rs.getString("TYPE_NAME") + " " + rs.getString("COLUMN_SIZE"));
+					Coluna column = new Coluna();
+					column.setColumnName(rs.getString("COLUMN_NAME"));
+					column.setTypeName(rs.getString("TYPE_NAME"));
+					column.setSize(rs.getString("COLUMN_SIZE"));
+					current_t.setColumn(column);
+					
+					/*System.out.println(rs.getString("COLUMN_NAME") + " " + rs.getString("TYPE_NAME") + " " + rs.getString("COLUMN_SIZE"));*/
 				}
-				System.out.println("\n");
+				/*System.out.println("\n");*/
 			}
 		}
 		catch(SQLException e)
@@ -114,4 +123,5 @@ public class Metadados
 			System.out.println("Não foi possível encontrar os metadados..." + e.getMessage());
 		}
 	}
+	
 }
