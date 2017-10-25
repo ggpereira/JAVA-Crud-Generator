@@ -1,4 +1,3 @@
-import java.lang.StringBuilder;
 
 public class GeraSQL 
 {
@@ -9,37 +8,84 @@ public class GeraSQL
 	
 	public String createInsert(Tabela t)
 	{
-		INSERT = "INSERT INTO " + t.getTableName() + " " + "("; /*INSERT INTO "tablename" ( */
+		INSERT = "INSERT INTO " + t.getTableName() + " ("; /*INSERT INTO "nome da tabela" ( */
+		int pos = t.getColumns().size() - 1;
+		
 		
 		for(Coluna column : t.getColumns())					
-		{												
-			INSERT += column.getColumnName() + ", ";	  /*INSERT INTO "tablename" column1, column2, column3... */
+		{									
+			if(pos > 0)
+			{
+				INSERT += column.getColumnName() + ", ";	  /*INSERT INTO "nome da tabela" column1, column2, column3... */
+			}
+			else
+			{
+				INSERT += column.getColumnName();
+			}
+			
+			pos--;
 		}
 		
-		/*Remove Espaço extra e vírgula*/
-		StringBuilder stringBuilder1 = new StringBuilder(INSERT);
-		stringBuilder1.deleteCharAt(INSERT.length() - 1);
-		stringBuilder1.deleteCharAt(INSERT.length() - 2);
+		INSERT += ")";
+		INSERT +=" VALUES (";
 		
-		INSERT = stringBuilder1.toString();
-
-		INSERT +=")" +  " VALUES (";	/*INSERT INTO "tablename" (column1, column2, column3...) VALUES */
+		pos = t.getColumns().size() - 1;
 		
-		for(int i = 0; i < t.getColumns().size(); i++)
+		for(int i = pos; i >= 0; i--)
 		{
-			INSERT += "?, ";   /*INSERT INTO "tablename" column1, column2, column3... VALUES (? ? ? ?...*/
+			if(i > 0)
+			{
+				INSERT += "?, ";
+			}
+			else
+			{
+				INSERT += "?";
+			}
 		}
 		
-		/*Remove Espaço extra e vírgula*/
-		StringBuilder stringBuilder2 = new StringBuilder(INSERT);
-		stringBuilder2.deleteCharAt(INSERT.length() - 1);
-		stringBuilder2.deleteCharAt(INSERT.length() - 2);
-
-		INSERT = stringBuilder2.toString();
-		
-		INSERT += ")";  /*INSERT INTO livros (codigo, autores, edicao, editora, nome, ano, isbn) VALUES (? ,? ,? ,? ,? ,? ,?)*/
+		INSERT +=")";			/*INSERT INTO "nome da tabela" column1, column2, column3... VALUES(?, ?, ?, ?, ?....)*/
 		
 		return INSERT;
+	}
+	
+	public String createUpdate(Tabela t)
+	{
+		UPDATE = "UPDATE" + " " + t.getTableName() + " " + "SET "; 
+		
+		int pos = t.getColumns().size() - 1;
+		
+		for(Coluna column : t.getColumns())
+		{
+			if(pos > 0)
+			{
+				UPDATE += column.getColumnName() + " = ?, ";
+			}
+			else
+			{
+				UPDATE += column.getColumnName() + " = ?";
+			}
+			
+			pos--;
+		}
+		
+		UPDATE += " WHERE" + " " + t.getPrimaryKey()  + " = ?";
+		
+		return UPDATE;
+	}
+	
+	public String createDelete(Tabela t)
+	{
+		DELETE = "DELETE from " + t.getTableName() + " " + "WHERE " + t.getPrimaryKey() + " = ?";
+		
+		return DELETE;
+	}
+	
+	
+	public String createSelect(Tabela t)
+	{
+		SELECT = "SELECT * FROM " +  t.getTableName() + " " + "WHERE " + t.getPrimaryKey() + " = ?";
+		
+		return SELECT;
 	}
 	
 }

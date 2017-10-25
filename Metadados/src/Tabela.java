@@ -5,6 +5,7 @@ public class Tabela
 {
 	private String tablename; 
 	private Collection<Coluna> columns = new ArrayList<Coluna>();	/*Armazena os objetos Coluna pertencentes as tabelas*/
+	private String primary_key; 
 	
 	public void setTableName(String tablename)
 	{
@@ -26,4 +27,13 @@ public class Tabela
 		return columns;
 	}
 	
+	public void setPrimaryKey(String primaryKey)
+	{
+		primary_key = primaryKey;
+	}
+	
+	public String getPrimaryKey()
+	{
+		return primary_key;
+	}
 }

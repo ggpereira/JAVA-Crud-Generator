@@ -85,6 +85,9 @@ public class Metadados
 				t.setTableName(rs.getString("TABLE_NAME"));
 				tables.add(t);
 			}
+			
+			
+			
 		}
 		catch(SQLException e)
 		{
@@ -104,7 +107,8 @@ public class Metadados
 			for(Tabela current_t : tables)
 			{
 				rs = m.getColumns(null, null, current_t.getTableName(), null);
-				System.out.println(current_t.getTableName().toUpperCase());
+				/*System.out.println(current_t.getTableName().toUpperCase());*/
+				
 				while(rs.next())
 				{
 					Coluna column = new Coluna();
@@ -124,4 +128,36 @@ public class Metadados
 		}
 	}
 	
+	public void getPrimaryKeyTables(Collection<Tabela> tables)
+	{
+		ResultSet rs = null; 
+		DatabaseMetaData m = getMetaData();
+		
+		try 
+		{
+			for(Tabela current_t : tables)
+			{
+				rs = m.getPrimaryKeys(null, null, current_t.getTableName());
+				while(rs.next())
+				{
+					current_t.setPrimaryKey(rs.getString("COLUMN_NAME"));
+				}
+			}
+		}
+		catch(SQLException e)
+		{
+			System.out.println("Não foi possível encontrar os metadados..." + e.getMessage());
+		}
+		
+	}
+	
+	public Collection<Tabela> tablesMetadata()
+	{
+		Collection<Tabela> tables = new ArrayList<Tabela>();
+		tables = getTables();		/*Retorna as tabelas para um arraylist de tabelas */
+		getColumnsMetadata(tables);		/*Preenche as tabelas com as suas colunas correspondentes */
+		getPrimaryKeyTables(tables);	/*Preecnhe as tabelas comas suas chaves primárias */
+		
+		return tables;
+	}
 }
