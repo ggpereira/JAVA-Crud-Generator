@@ -1,8 +1,10 @@
 import java.sql.Connection; 
-import java.sql.SQLException; 
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.util.Collection;
 import java.util.ArrayList;
 
@@ -96,14 +98,15 @@ public class Metadados
 		
 		return tables;
 	}
-	
+
 	
 	public void getColumnsMetadata(Collection<Tabela> tables) /*Navega pelas tabelas acessando suas colunas*/
 	{
-		ResultSet rs = null; 
+		ResultSet rs = null;
 		DatabaseMetaData m = getMetaData();
 		
 		try {
+			
 			for(Tabela current_t : tables)
 			{
 				rs = m.getColumns(null, null, current_t.getTableName(), null);
@@ -157,7 +160,9 @@ public class Metadados
 		tables = getTables();		/*Retorna as tabelas para um arraylist de tabelas */
 		getColumnsMetadata(tables);		/*Preenche as tabelas com as suas colunas correspondentes */
 		getPrimaryKeyTables(tables);	/*Preecnhe as tabelas comas suas chaves primárias */
-		
+		ConverteTabelas c = new ConverteTabelas(); 
+		c.converteTabelas(tables);
 		return tables;
 	}
+	
 }

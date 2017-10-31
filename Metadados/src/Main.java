@@ -17,6 +17,7 @@ public class Main
 		{
 			System.out.println(table.getTableName().toUpperCase());
 			System.out.println("PRIMARY KEY: " + table.getPrimaryKey());
+			new GeraMetodosDAO().geraResultSet(table);
 			
 			for(Coluna column : table.getColumns())
 			{
