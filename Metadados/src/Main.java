@@ -10,12 +10,13 @@ public class Main
 		Collection<Tabela> t = new ArrayList<Tabela>();
 		Metadados m = new Metadados();
 		GeraSQL sql = new GeraSQL();
+		String teste;
 		
 		t = m.tablesMetadata();
 		
 		for(Tabela table : t)
 		{
-			System.out.println(table.getTableName().toUpperCase());
+			/*System.out.println(table.getTableName().toUpperCase());
 			System.out.println("PRIMARY KEY: " + table.getPrimaryKey());
 			new GeraMetodosDAO().geraResultSet(table);
 			
@@ -27,8 +28,12 @@ public class Main
 			System.out.println(sql.createUpdate(table));
 			System.out.println(sql.createDelete(table));
 			System.out.println(sql.createSelect(table));
+			*/
+			
+			teste = new GeraMetodosDAO().geraInsert(table);
+			System.out.println(teste);
 			System.out.println("\n");
 		}
-				
+		
 	}
 }
