@@ -9,36 +9,55 @@ public class GeraMetodosDAO
 	private String metodoBuscar;
 	private String metodoAlterar;
 	
-	public Collection<String> geraResultSet(Tabela t)
+	
+	private String geraPreparedStatement(String type)
 	{
-		Collection<String> result_set = new ArrayList<String>();
-		String op;
-		
-		for(Coluna column  : t.getColumns())
+		switch(type)
 		{
-			op = "rs.get" + column.getTypeName();
-			System.out.println(op);
-			result_set.add(op);
+		   case "int":
+			   return "ps.setInt";
+		   case "float":
+			   return "ps.setFloat";
+		   case "double": 
+		   	   return "ps.setDouble"; 
+		   case "String":
+			   return "ps.setString"; 
+		   case "long":
+		   	   return "ps.setLong";
+		   case "boolean":
+			   return "ps.setBoolean";
+		   case "char" :
+			   return "ps.setChar"; 
+		   default:
+			   System.out.println("Tipo não identificado");
 		}
-	
-		
-		return result_set;
+		return null;
 	}
-	
 	
 	public String geraInsert(Tabela t)
 	{
-		GeraSQL sql = new GeraSQL();
-		metodoInserir = "public void inserir(" + t.getTableName() + " t) {\n";
-		metodoInserir += "\tConnection conexao = open();\n\n";
-		metodoInserir += "\ttry {\n\t\tPreparedStatement ps = conexao.prepareStatement(\"" + sql.createInsert(t) + "\" )";
+		int i = 1;
+		GeraSQL sqlCode = new GeraSQL();
+		metodoInserir = "public void inserir(" + t.getTableName() + " t){\n";
+		metodoInserir += "\tConnection conexao = open();\n";
+		metodoInserir += "\ttry{\n";
+		metodoInserir += "\t\tPreparedStatement ps = conexao.prepareStatement(\""+ sqlCode.createInsert(t) + "\");\n";
 		
-		
+		for(Coluna columns : t.getColumns())
+		{
+			metodoInserir += "\t\t" + geraPreparedStatement(columns.getTypeName()) + "(" + i + ", t.get" + columns.getColumnName() + "());\n";
+			i += 1;
+		}
+	
+		metodoInserir += "\t\tps.execute();\n";
+		metodoInserir += "\t\tps.close();\n";
+		metodoInserir += "\t}catch(SQLException e){\n";
+		metodoInserir += "\t\te.printStackTrace();\n";
+		metodoInserir += "\t}\n";
+		metodoInserir += "}";
 		
 		return metodoInserir;
 	}
-	
-	
 	
 	
 

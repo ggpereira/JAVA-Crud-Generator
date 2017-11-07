@@ -7,19 +7,19 @@ public class ConverteTabelas {
 		switch(tipoDado)
 		{
 			case "int4":
-				return "Int"; 
+				return "int"; 
 			case "varchar": 
 				return "String"; 
 			case "real": 
-				return "Float"; 
+				return "float"; 
 			case "double precision": 
-				return "Double"; 
+				return "double"; 
 			case "bigint":
-				return "Long"; 
+				return "long"; 
 			case "character":
-				return "Char";
+				return "char";
 			case "boolean" :
-				return "Boolean";
+				return "boolean";
 			default:
 				System.out.println("Tipo não identificado!");
 		}

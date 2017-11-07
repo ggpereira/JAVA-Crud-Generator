@@ -1,6 +1,6 @@
-import java.util.Collection; 
+import java.util.Collection;
+import java.util.Locale;
 import java.util.ArrayList;
-
 
 public class Main 
 {
@@ -27,8 +27,8 @@ public class Main
 			System.out.println(sql.createInsert(table));
 			System.out.println(sql.createUpdate(table));
 			System.out.println(sql.createDelete(table));
-			System.out.println(sql.createSelect(table));
-			*/
+			System.out.println(sql.createSelect(table));*/
+		
 			
 			teste = new GeraMetodosDAO().geraInsert(table);
 			System.out.println(teste);
