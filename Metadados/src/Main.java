@@ -1,7 +1,5 @@
-import java.util.Collection;
-import java.util.Locale;
 import java.util.ArrayList;
-
+import java.util.Collection;
 public class Main 
 {
 	public static void main(String[] args)
@@ -11,6 +9,7 @@ public class Main
 		Metadados m = new Metadados();
 		GeraSQL sql = new GeraSQL();
 		String teste;
+		String teste2;
 		
 		t = m.tablesMetadata();
 		
@@ -29,10 +28,11 @@ public class Main
 			System.out.println(sql.createDelete(table));
 			System.out.println(sql.createSelect(table));*/
 		
+			GeraClasse c1 = new GeraClasse();
 			
-			teste = new GeraMetodosDAO().geraInsert(table);
-			System.out.println(teste);
-			System.out.println("\n");
+			System.out.println(c1.geraClasse(table));
+			
+			
 		}
 		
 	}
