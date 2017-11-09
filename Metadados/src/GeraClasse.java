@@ -15,7 +15,7 @@ public class GeraClasse {
 	private String geraMetodoSet(String atrib, String tipo)
 	{
 		String metodo =  "\tpublic void " + "set" + atrib.substring(0, 1).toUpperCase() + atrib.substring(1) + "(" + tipo + " " + atrib + ")" +"{\n";
-		metodo += "\t\tthis." + atrib + " = " +  atrib + "\n";
+		metodo += "\t\tthis." + atrib + " = " +  atrib + ";\n";
 		metodo += "\t}";
 		
 		return metodo;
