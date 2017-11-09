@@ -1,38 +1,28 @@
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 public class Main 
 {
-	public static void main(String[] args)
+	public static void main(String[] args) throws FileNotFoundException
 	{
 		
 		Collection<Tabela> t = new ArrayList<Tabela>();
 		Metadados m = new Metadados();
 		GeraSQL sql = new GeraSQL();
-		String teste;
-		String teste2;
 		
 		t = m.tablesMetadata();
 		
 		for(Tabela table : t)
 		{
-			/*System.out.println(table.getTableName().toUpperCase());
-			System.out.println("PRIMARY KEY: " + table.getPrimaryKey());
-			new GeraMetodosDAO().geraResultSet(table);
-			
-			for(Coluna column : table.getColumns())
-			{
-				System.out.println(column.getColumnName() + " " + column.getTypeName() + " " + column.getSize());
-			}
-			System.out.println(sql.createInsert(table));
-			System.out.println(sql.createUpdate(table));
-			System.out.println(sql.createDelete(table));
-			System.out.println(sql.createSelect(table));*/
-		
 			GeraClasse c1 = new GeraClasse();
-			
-			System.out.println(c1.geraClasse(table));
-			
-			
+                        GeraMetodosDAO c2 = new GeraMetodosDAO();
+                        PrintWriter out = new PrintWriter("src/" + table.getTableName().substring(0,1).toUpperCase() + table.getTableName().substring(1) + ".java");
+			out.println(c1.geraClasse(table));
+                        out.close();
+                        PrintWriter out2 = new PrintWriter("src/" + table.getTableName().substring(0,1).toUpperCase() + table.getTableName().substring(1) + "DAO.java");
+                        out2.println(c2.geraMetodosDAO(table));
+                        out2.close();
 		}
 		
 	}
