@@ -62,8 +62,8 @@ public class GeraMetodosDAO
                 {
             		if(column.getColumnName().equals(t.getPrimaryKey()) == false) /*Chave primária precisa ser a última string concatenada nos sets*/
             		{
-            		metodoAlterar += "\t\t\tps.set" + column.getTypeName().substring(0,1).toUpperCase() + column.getTypeName().substring(1) + "(" + contador + ",t.get" + column.getColumnName().substring(0,1).toUpperCase() + (column.getColumnName()).substring(1) + "());\n";
-            		contador++;
+            			metodoAlterar += "\t\t\tps.set" + column.getTypeName().substring(0,1).toUpperCase() + column.getTypeName().substring(1) + "(" + contador + ",t.get" + column.getColumnName().substring(0,1).toUpperCase() + (column.getColumnName()).substring(1) + "());\n";
+            			contador++;
             		}
             		else
             		{
