@@ -3,7 +3,7 @@
 public class GeraMetodosDAO 
 {
 	
-	/*Essa classe possui os métodos que geram todos os métodos necessários para realizar operações no banco de dados*/
+	/*!Essa classe possui os métodos que geram todos os métodos necessários para realizar operações no banco de dados!*/
 	
     	private String DAO;
     	private String metodoInserir; 
