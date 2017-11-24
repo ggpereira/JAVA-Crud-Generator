@@ -1,4 +1,4 @@
-
+/*BANCO DE DADOS UTILIZADO: POSTGRESQL*/
 public class DB /*Necessário alterar de acordo com as informações de acesso ao banco de dados*/
 {
 	public static final String JDBC_DRIVER = "org.postgresql.Driver"; 
