@@ -95,7 +95,7 @@ public class GeraSQL
 	
 	public String createSelectAll(Tabela t)
 	{
-		SELECT_ALL = SELECT = "SELECT * FROM " + t.getTableName();
+		SELECT_ALL = "SELECT * FROM " + t.getTableName();
 		return SELECT_ALL;
 	}
 	
