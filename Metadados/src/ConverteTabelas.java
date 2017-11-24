@@ -2,7 +2,7 @@ import java.util.Collection;
 
 public class ConverteTabelas {
 	
-	public String convert(String tipoDado)
+	public String convert(String tipoDado) /*Converte os tipos do banco de dados para os tipos do JAVA*/
 	{
 		switch(tipoDado)
 		{
@@ -27,15 +27,14 @@ public class ConverteTabelas {
 		return null;
 	}
 	
-	
+	/*Converte os tipos das colunas de todas as tabelas lidas */
 	public void converteTabelas(Collection<Tabela> tables)
 	{
-		ConverteTabelas c = new ConverteTabelas();
 		for(Tabela current_t : tables)
 		{
 			for(Coluna column : current_t.getColumns())
 			{
-				column.setTypeName(c.convert(column.getTypeName()));
+				column.setTypeName(convert(column.getTypeName()));
 			}
 		}
 	}

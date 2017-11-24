@@ -4,7 +4,8 @@ public class GeraSQL
 	private String INSERT; 
 	private String UPDATE; 
 	private String DELETE; 
-	private String SELECT; 
+	private String SELECT;
+	private String SELECT_ALL;
 	
 	public String createInsert(Tabela t)
 	{
@@ -56,13 +57,17 @@ public class GeraSQL
 		
 		for(Coluna column : t.getColumns())
 		{
-			if(pos > 0)
+			
+			if(column.getColumnName().equals(t.getPrimaryKey()) == false)
 			{
-				UPDATE += column.getColumnName() + " = ?, ";
-			}
-			else
-			{
-				UPDATE += column.getColumnName() + " = ?";
+				if(pos > 0)
+				{
+					UPDATE += column.getColumnName() + " = ?, ";
+				}
+				else
+				{
+					UPDATE += column.getColumnName() + " = ?";
+				}
 			}
 			
 			pos--;
@@ -86,6 +91,12 @@ public class GeraSQL
 		SELECT = "SELECT * FROM " +  t.getTableName() + " " + "WHERE " + t.getPrimaryKey() + " = ?";
 		
 		return SELECT;
+	}
+	
+	public String createSelectAll(Tabela t)
+	{
+		SELECT_ALL = SELECT = "SELECT * FROM " + t.getTableName();
+		return SELECT_ALL;
 	}
 	
 }

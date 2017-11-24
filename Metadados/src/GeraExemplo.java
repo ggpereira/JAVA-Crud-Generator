@@ -1,5 +1,7 @@
 public class GeraExemplo {
-
+	
+	/*Gera exemplos para demonstração */
+	
     private String geraExemplo;
     private String geraExemploInsert;
     private String geraExemploSearch;
@@ -19,7 +21,16 @@ public class GeraExemplo {
 
     public String geraExemploInsert(Tabela t) {
         geraExemploInsert = "\n\t\tSystem.out.println(\"Inserindo " + t.getTableName().substring(0, 1).toUpperCase() + t.getTableName().substring(1) + "...\");\n";
-        geraExemploInsert += "\t\t" + t.getTableName().substring(0, 1).toUpperCase() + t.getTableName().substring(1) + " t1 = new " + t.getTableName().substring(0, 1).toUpperCase() + t.getTableName().substring(1) + "();";
+        geraExemploInsert += "\t\t" + t.getTableName().substring(0, 1).toUpperCase() + t.getTableName().substring(1) + " t1 = new " + t.getTableName().substring(0, 1).toUpperCase() + t.getTableName().substring(1) + "();\n";
+  
+        /*Monta os sets necessários para preencher o objeto*/
+        for(Coluna c : t.getColumns())
+        {
+        	geraExemploInsert += "\t\t" + "t1" + ".set" + c.getColumnName().substring(0, 1).toUpperCase() + c.getColumnName().substring(1) + "(" +  GeradorValores.getValor(c.getTypeName()) + ");" + "\n";
+        	
+        }
+        
+        
         geraExemploInsert += "\n\t\tcs.inserir(t1);";
         return geraExemploInsert;
     }
@@ -38,7 +49,7 @@ public class GeraExemplo {
     public String geraExemploUpdate(Tabela t) {
         geraExemploUpdate = "\n\t\tSystem.out.println(\"Alterando " + t.getTableName().substring(0, 1).toUpperCase() + t.getTableName().substring(1) + "...\");\n";
         for (Coluna column : t.getColumns()) {
-            geraExemploUpdate += "\t\tt1.set" + column.getColumnName().substring(0, 1).toUpperCase() + column.getColumnName().substring(1) + "(" + column.getTypeName() + ");\n";
+            geraExemploUpdate += "\t\tt1.set" + column.getColumnName().substring(0, 1).toUpperCase() + column.getColumnName().substring(1) + "(" + GeradorValores.getValor(column.getTypeName()) + ");\n";
         }
         geraExemploUpdate += "\t\tcs.alterar(t1);";
         return geraExemploUpdate;
@@ -50,5 +61,6 @@ public class GeraExemplo {
         geraExemploDelete += "\t\t\tcs.deletar(temp);";
         return geraExemploDelete;
     }
+    
 
 }

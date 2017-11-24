@@ -1,10 +1,10 @@
-import java.util.Collection;
-import java.util.ArrayList;
+
 
 public class GeraClasse {
 	private String classe;
 	
-	
+	/*Gera as classes correspondentes as entidades*/
+
 	private String geraAtributo(String atrib, String tipo)
 	{
 		String atributo = "private " + tipo + " " + atrib + ";";

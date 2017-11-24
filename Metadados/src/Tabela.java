@@ -3,6 +3,8 @@ import java.util.ArrayList;
 
 public class Tabela 
 {
+	/*Classe que representa uma tabela do banco de dados*/
+	
 	private String tablename; 
 	private Collection<Coluna> columns = new ArrayList<Coluna>();	/*Armazena os objetos Coluna pertencentes as tabelas*/
 	private String primary_key; 

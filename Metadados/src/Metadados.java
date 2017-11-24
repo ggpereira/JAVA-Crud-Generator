@@ -1,10 +1,8 @@
 import java.sql.Connection; 
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.util.Collection;
 import java.util.ArrayList;
 
@@ -20,7 +18,7 @@ public class Metadados
 		}
 		catch(ClassNotFoundException e)
 		{
-			System.out.println("Não encontrou o driver chamado " + DB.JDBC_DRIVER + "na memória");
+			System.out.println("Nï¿½o encontrou o driver chamado " + DB.JDBC_DRIVER + "na memÃ³ria");
 		}
 		
 		try {
@@ -45,14 +43,14 @@ public class Metadados
 		}
 		catch(SQLException e)
 		{
-			System.out.println("Não foi possível ler os metadados: " + e.getMessage());
+			System.out.println("NÃ£o foi possï¿½vel ler os metadados: " + e.getMessage());
 		}
 		
 		
 		return metadata;
 	}
 	
-	public void printGeneralMetadata()	//Imprime informações sobre o BD utilizado
+	public void printGeneralMetadata()	//Imprime informaï¿½ï¿½es sobre o BD utilizado
 	{
 		try
 		{
@@ -66,7 +64,7 @@ public class Metadados
 		}
 		catch(SQLException e)
 		{
-			System.out.println("Não foi possível encontrar os metadados..." + e.getMessage());
+			System.out.println("Nï¿½o foi possï¿½vel encontrar os metadados..." + e.getMessage());
 		}
 	}
 	
@@ -93,7 +91,7 @@ public class Metadados
 		}
 		catch(SQLException e)
 		{
-			System.out.println("Não foi possível encontrar os metadados..." + e.getMessage());
+			System.out.println("Nï¿½o foi possï¿½vel encontrar os metadados..." + e.getMessage());
 		}
 		
 		return tables;
@@ -127,7 +125,7 @@ public class Metadados
 		}
 		catch(SQLException e)
 		{
-			System.out.println("Não foi possível encontrar os metadados..." + e.getMessage());
+			System.out.println("Nï¿½o foi possï¿½vel encontrar os metadados..." + e.getMessage());
 		}
 	}
 	
@@ -149,7 +147,7 @@ public class Metadados
 		}
 		catch(SQLException e)
 		{
-			System.out.println("Não foi possível encontrar os metadados..." + e.getMessage());
+			System.out.println("Nï¿½o foi possï¿½vel encontrar os metadados..." + e.getMessage());
 		}
 		
 	}
@@ -159,7 +157,7 @@ public class Metadados
 		Collection<Tabela> tables = new ArrayList<Tabela>();
 		tables = getTables();		/*Retorna as tabelas para um arraylist de tabelas */
 		getColumnsMetadata(tables);		/*Preenche as tabelas com as suas colunas correspondentes */
-		getPrimaryKeyTables(tables);	/*Preecnhe as tabelas comas suas chaves primárias */
+		getPrimaryKeyTables(tables);	/*Preecnhe as tabelas comas suas chaves primï¿½rias */
 		ConverteTabelas c = new ConverteTabelas(); 
 		c.converteTabelas(tables);
 		return tables;
