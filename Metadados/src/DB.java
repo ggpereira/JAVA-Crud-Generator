@@ -1,8 +1,8 @@
 
-public class DB /*Necess·rio alterar de acordo com as informaÁıes de acesso ao banco de dados*/
+public class DB /*Necess√°rio alterar de acordo com as informa√ß√µes de acesso ao banco de dados*/
 {
 	public static final String JDBC_DRIVER = "org.postgresql.Driver"; 
-	static final String SENHA = "@1g2o3m4e5s"; /*Necess·rio alterar*/
-	static final String USUARIO = "postgres"; /*Necess·rio alterar*/
-	static final String URL_CONEXAO = "jdbc:postgresql://localhost/biblioteca"; /*Necess·rio talvez alterar*/
+	static final String SENHA = ""; /*Necess√°rio completar*/
+	static final String USUARIO = "postgres"; /*Necess√°rio alterar*/
+	static final String URL_CONEXAO = "jdbc:postgresql://localhost/biblioteca"; /*Necess√°rio talvez alterar*/
 }
