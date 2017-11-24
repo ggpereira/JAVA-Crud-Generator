@@ -12,7 +12,7 @@ public class Main
 		
 		t = m.tablesMetadata();
 		
-		for(Tabela table : t)
+		for(Tabela table : t) /*Escreve as classes no arquivo*/
 		{
 			GeraClasse c1 = new GeraClasse();
             		GeraMetodosDAO c2 = new GeraMetodosDAO();
