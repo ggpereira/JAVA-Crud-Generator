@@ -3,7 +3,7 @@
 public class GeraMetodosDAO 
 {
 	
-		/*Está classe possui os métodos que geram todos os métodos necessários para realizar operações no banco de dados*/
+	/*Essa classe possui os mÃ©todos que geram todos os mÃ©todos necessÃ¡rios para realizar operaÃ§Ãµes no banco de dados*/
 	
     	private String DAO;
     	private String metodoInserir; 
@@ -17,7 +17,7 @@ public class GeraMetodosDAO
     		"import java.sql.ResultSet;\n" + "import java.sql.SQLException;\n" + "import java.sql.Statement;\n" + "import java.util.ArrayList;\n" +
     		"import java.util.Collection;\n\npublic class " + t.getTableName().substring(0,1).toUpperCase() + t.getTableName().substring(1) + "DAO {\n\n";
     		DAO += "\tpublic Connection open() {\n\t\tConnection c = null;\n\t\ttry {\n\t\t\tClass.forName(DB.JDBC_DRIVER);\n";
-    		DAO += "\t\t} catch (ClassNotFoundException e) {\n\t\t\tSystem.out.println(\"NÃ£o encontrou o driver chamado\" + DB.JDBC_DRIVER + \"na memÃ³ria.\");\n\t\t}\n";
+    		DAO += "\t\t} catch (ClassNotFoundException e) {\n\t\t\tSystem.out.println(\"NÃƒÂ£o encontrou o driver chamado\" + DB.JDBC_DRIVER + \"na memÃƒÂ³ria.\");\n\t\t}\n";
     		DAO += "\t\ttry {\n\t\t\tc = DriverManager.getConnection(DB.URL_CONEXAO, DB.USUARIO, DB.SENHA);\n\t\t} catch (SQLException e) {\n\t\t\te.printStackTrace();\n\t\t}\n";
     		DAO += "\t\treturn c;\n\t}\n";
     		DAO += geraInsert(t);
@@ -27,7 +27,7 @@ public class GeraMetodosDAO
     		return DAO;
     	}
 	
-    	/*Recebe uma tabela e cria o método para inserir no banco de dados*/
+    	/*Recebe uma tabela e cria o mÃ©todo para inserir no banco de dados*/
 		public String geraInsert(Tabela t)
 		{
         	contador=1;
@@ -48,11 +48,11 @@ public class GeraMetodosDAO
 			return metodoInserir;
 		}
         
-		/*Recebe uma tabela e cria o método para atualizar os valores no banco de dados*/
+		/*Recebe uma tabela e cria o mÃ©todo para atualizar os valores no banco de dados*/
         public String geraUpdate(Tabela t)
         {
         	contador=1;
-        	String primary_key_type = "";/*Precisa do tipo da chave primária pra montar a string*/
+        	String primary_key_type = "";/*Precisa do tipo da chave primÃ¡ria pra montar a string*/
         	
         	GeraSQL sql = new GeraSQL();
         	metodoAlterar = "\tpublic void alterar(" + t.getTableName().substring(0,1).toUpperCase() + t.getTableName().substring(1) + " t) {\n";
@@ -60,7 +60,7 @@ public class GeraMetodosDAO
         	metodoAlterar += "\t\ttry {\n\t\t\tPreparedStatement ps = conexao.prepareStatement(\"" + sql.createUpdate(t) + "\");\n";
             for(Coluna column : t.getColumns())					
             {
-            	if(column.getColumnName().equals(t.getPrimaryKey()) == false) /*Chave primária precisa ser a última string concatenada nos sets*/
+            	if(column.getColumnName().equals(t.getPrimaryKey()) == false) /*Chave primÃ¡ria precisa ser a Ãºltima string concatenada nos sets*/
             	{
             		metodoAlterar += "\t\t\tps.set" + column.getTypeName().substring(0,1).toUpperCase() + column.getTypeName().substring(1) + "(" + contador + ",t.get" + column.getColumnName().substring(0,1).toUpperCase() + (column.getColumnName()).substring(1) + "());\n";
             		contador++;
@@ -80,7 +80,7 @@ public class GeraMetodosDAO
             return metodoAlterar;
         }
         
-        /*Recebe uma tabela e cria o método para buscar no banco de dados*/
+        /*Recebe uma tabela e cria o mÃ©todo para buscar no banco de dados*/
         public String geraSearch(Tabela t)
         {
         	contador=1;
@@ -105,7 +105,7 @@ public class GeraMetodosDAO
         	return metodoBuscar;
         }
         
-        /*Recebe uma tabela e cria o método para deletar um item no banco de dados*/
+        /*Recebe uma tabela e cria o mÃ©todo para deletar um item no banco de dados*/
         public String geraDelete(Tabela t)
         {
         	contador=1;
