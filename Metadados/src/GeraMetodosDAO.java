@@ -28,14 +28,14 @@ public class GeraMetodosDAO
     	}
 	
     	/*Recebe uma tabela e cria o método para inserir no banco de dados*/
-		public String geraInsert(Tabela t)
-		{
+	public String geraInsert(Tabela t)
+	{
         	contador=1;
-			GeraSQL sql = new GeraSQL();
-			metodoInserir = "\tpublic void inserir(" + t.getTableName().substring(0,1).toUpperCase() + t.getTableName().substring(1) + " t) {\n";
-			metodoInserir += "\t\tConnection conexao = open();\n";
-			metodoInserir += "\t\ttry {\n\t\t\tPreparedStatement ps = conexao.prepareStatement(\"" + sql.createInsert(t) + "\");\n";
-			for(Coluna column : t.getColumns())					
+		GeraSQL sql = new GeraSQL();
+		metodoInserir = "\tpublic void inserir(" + t.getTableName().substring(0,1).toUpperCase() + t.getTableName().substring(1) + " t) {\n";
+		metodoInserir += "\t\tConnection conexao = open();\n";
+		metodoInserir += "\t\ttry {\n\t\t\tPreparedStatement ps = conexao.prepareStatement(\"" + sql.createInsert(t) + "\");\n";
+		for(Coluna column : t.getColumns())					
         	{			
         		metodoInserir += "\t\t\tps.set" + column.getTypeName().substring(0,1).toUpperCase() + column.getTypeName().substring(1) + "(" + contador + ",t.get" + column.getColumnName().substring(0,1).toUpperCase() + (column.getColumnName()).substring(1) + "());\n";
         		contador++;
@@ -45,8 +45,8 @@ public class GeraMetodosDAO
         	metodoInserir += "\t\t\tconexao.close();\n";
         	metodoInserir += "\t\t} catch (SQLException e) {\n";
         	metodoInserir += "\t\t\te.printStackTrace();\n\t\t}\n\t}";	
-			return metodoInserir;
-		}
+		return metodoInserir;
+	}
         
 		/*Recebe uma tabela e cria o método para atualizar os valores no banco de dados*/
         public String geraUpdate(Tabela t)
@@ -58,26 +58,27 @@ public class GeraMetodosDAO
         	metodoAlterar = "\tpublic void alterar(" + t.getTableName().substring(0,1).toUpperCase() + t.getTableName().substring(1) + " t) {\n";
         	metodoAlterar += "\t\tConnection conexao = open();\n";
         	metodoAlterar += "\t\ttry {\n\t\t\tPreparedStatement ps = conexao.prepareStatement(\"" + sql.createUpdate(t) + "\");\n";
-            for(Coluna column : t.getColumns())					
-            {
-            	if(column.getColumnName().equals(t.getPrimaryKey()) == false) /*Chave primária precisa ser a última string concatenada nos sets*/
-            	{
+                for(Coluna column : t.getColumns())					
+                {
+            		if(column.getColumnName().equals(t.getPrimaryKey()) == false) /*Chave primária precisa ser a última string concatenada nos sets*/
+            		{
             		metodoAlterar += "\t\t\tps.set" + column.getTypeName().substring(0,1).toUpperCase() + column.getTypeName().substring(1) + "(" + contador + ",t.get" + column.getColumnName().substring(0,1).toUpperCase() + (column.getColumnName()).substring(1) + "());\n";
             		contador++;
+            		}
+            		else
+            		{
+				/*Se a coluna for a chave primária guarda o tipo da chave para montar a chamada do método correspondente*/
+            			primary_key_type = column.getTypeName().substring(0, 1).toUpperCase() + column.getTypeName().substring(1);
+            		}
             	}
-            	else
-            	{
-            		primary_key_type = column.getTypeName().substring(0, 1).toUpperCase() + column.getTypeName().substring(1);
-            	}
-            }
-            metodoAlterar += "\t\t\tps.set" + primary_key_type + "(" + contador + ",t.get" + t.getPrimaryKey().substring(0, 1).toUpperCase() + t.getPrimaryKey().substring(1) + "());\n";
+                metodoAlterar += "\t\t\tps.set" + primary_key_type + "(" + contador + ",t.get" + t.getPrimaryKey().substring(0, 1).toUpperCase() + t.getPrimaryKey().substring(1) + "());\n";
             
-            metodoAlterar += "\t\t\tps.execute();\n";
-            metodoAlterar += "\t\t\tps.close();\n";
-            metodoAlterar += "\t\t\tconexao.close();\n";
-            metodoAlterar += "\t\t} catch (SQLException e) {\n";
-            metodoAlterar += "\t\t\te.printStackTrace();\n\t\t}\n\t}";	
-            return metodoAlterar;
+                metodoAlterar += "\t\t\tps.execute();\n";
+                metodoAlterar += "\t\t\tps.close();\n";
+            	metodoAlterar += "\t\t\tconexao.close();\n";
+            	metodoAlterar += "\t\t} catch (SQLException e) {\n";
+            	metodoAlterar += "\t\t\te.printStackTrace();\n\t\t}\n\t}";	
+            	return metodoAlterar;
         }
         
         /*Recebe uma tabela e cria o método para buscar no banco de dados*/
